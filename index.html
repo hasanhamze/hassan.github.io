@@ -4,271 +4,537 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HH Insights — Hassan Hamze</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --navy: #0d1b2a;
-    --navy2: #1a2e42;
-    --accent: #00c896;
-    --accent2: #00a87e;
-    --light: #f4f7f2;
-    --muted: #8a9bb0;
-    --border: rgba(255,255,255,0.08);
-    --card: rgba(255,255,255,0.04);
-  }
+:root {
+  --bg: #0a0a0a;
+  --cream: #f0ead6;
+  --gold: #c9a84c;
+  --gold2: #e8c97a;
+  --red: #c0392b;
+  --muted: #4a4a4a;
+  --border: rgba(240,234,214,0.1);
+}
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--navy);
-    color: #e8edf2;
-    line-height: 1.6;
-    font-size: 15px;
-  }
+html { scroll-behavior: smooth; }
 
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.1rem 3rem;
-    background: rgba(13,27,42,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-  .logo {
-    font-family: 'DM Mono', monospace;
-    font-size: 14px;
-    color: var(--accent);
-    letter-spacing: 0.05em;
-  }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    color: var(--muted); text-decoration: none; font-size: 13px;
-    letter-spacing: 0.04em; text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: #e8edf2; }
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: 'Syne', sans-serif;
+  cursor: none;
+  overflow-x: hidden;
+}
 
-  .hero {
-    min-height: 90vh;
-    display: flex; align-items: center;
-    padding: 6rem 3rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; top: -10%; right: -5%;
-    width: 55%; height: 120%;
-    background: radial-gradient(ellipse at center, rgba(0,200,150,0.07) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 4rem; align-items: center;
-    max-width: 1100px; margin: 0 auto; width: 100%;
-  }
-  .hero-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px; color: var(--accent);
-    letter-spacing: 0.12em; text-transform: uppercase;
-    margin-bottom: 1.2rem;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .hero-tag::before {
-    content: ''; display: inline-block;
-    width: 28px; height: 1px; background: var(--accent);
-  }
-  h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2.8rem, 5vw, 4.2rem);
-    line-height: 1.1;
-    color: #fff;
-    margin-bottom: 1.2rem;
-  }
-  h1 em { font-style: italic; color: var(--accent); }
-  .hero-sub {
-    font-size: 16px; color: var(--muted); line-height: 1.7;
-    margin-bottom: 2rem; max-width: 420px;
-  }
-  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px; font-size: 14px; font-weight: 500;
-    text-decoration: none; cursor: pointer;
-    transition: all 0.2s; border: none;
-  }
-  .btn-primary { background: var(--accent); color: #0d1b2a; }
-  .btn-primary:hover { background: #00daa8; transform: translateY(-1px); }
-  .btn-outline {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.2);
-    color: #e8edf2;
-  }
-  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+/* CUSTOM CURSOR */
+#cursor {
+  width: 12px; height: 12px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+  mix-blend-mode: difference;
+}
+#cursor-ring {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(201,168,76,0.5);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
+}
+body:hover #cursor { opacity: 1; }
 
-  .terminal {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  .terminal-bar {
-    display: flex; align-items: center; gap: 6px;
-    padding: 10px 16px;
-    background: rgba(255,255,255,0.04);
-    border-bottom: 1px solid var(--border);
-  }
-  .dot { width: 10px; height: 10px; border-radius: 50%; }
-  .dot.r { background: #ff5f57; }
-  .dot.y { background: #ffbd2e; }
-  .dot.g { background: #28c840; }
-  .term-title { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-left: auto; }
-  .terminal-body { padding: 1.5rem; font-family: 'DM Mono', monospace; font-size: 13px; line-height: 2; }
-  .t-comment { color: #4a6080; }
-  .t-key { color: #7eb8f7; }
-  .t-str { color: var(--accent); }
-  .t-arr { color: #f0c06a; }
-  .t-num { color: #f08a7a; }
-  .t-brace { color: var(--muted); }
-  .cursor { display: inline-block; width: 8px; height: 14px; background: var(--accent); animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 2px; }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+/* NOISE OVERLAY */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 1000;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 128px;
+}
 
-  section { padding: 6rem 3rem; max-width: 1100px; margin: 0 auto; }
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px; color: var(--accent);
-    letter-spacing: 0.14em; text-transform: uppercase;
-    margin-bottom: 0.6rem;
-  }
-  h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(1.8rem, 3vw, 2.6rem);
-    color: #fff; margin-bottom: 0.5rem;
-  }
-  .section-sub { color: var(--muted); font-size: 15px; margin-bottom: 3rem; }
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 2rem 3rem;
+  mix-blend-mode: normal;
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px; letter-spacing: 0.15em;
+  color: var(--cream);
+}
+.nav-logo span { color: var(--gold); }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(240,234,214,0.5); text-decoration: none;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px; background: var(--gold);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--cream); }
+.nav-links a:hover::after { width: 100%; }
 
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-  }
-  .service-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1.5rem;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .service-card:hover { border-color: rgba(0,200,150,0.3); transform: translateY(-2px); }
-  .service-icon {
-    width: 40px; height: 40px; border-radius: 8px;
-    background: rgba(0,200,150,0.1);
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1rem; font-size: 18px;
-  }
-  .service-card h3 { font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 0.5rem; }
-  .service-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 3rem 4rem;
+  position: relative; overflow: hidden;
+}
 
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-  }
-  .project-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.2s, border-color 0.2s;
-  }
-  .project-card:hover { transform: translateY(-3px); border-color: rgba(0,200,150,0.3); }
-  .project-banner {
-    height: 110px;
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-  }
-  .project-banner.b1 { background: linear-gradient(135deg, #0d2e25 0%, #0d3d2e 100%); }
-  .project-banner.b2 { background: linear-gradient(135deg, #0d1f3d 0%, #0d2a50 100%); }
-  .project-banner.b3 { background: linear-gradient(135deg, #2e1a0d 0%, #3d2a0d 100%); }
-  .banner-chart { position: absolute; bottom: 0; left: 0; right: 0; }
-  .project-body { padding: 1.25rem; }
-  .proj-tag {
-    display: inline-block;
-    font-family: 'DM Mono', monospace; font-size: 10px;
-    color: var(--accent); letter-spacing: 0.1em;
-    text-transform: uppercase; margin-bottom: 0.5rem;
-  }
-  .project-body h3 { font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 0.5rem; }
-  .project-body p { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
-  .tech-pills { display: flex; flex-wrap: wrap; gap: 6px; }
-  .pill {
-    font-family: 'DM Mono', monospace; font-size: 10px;
-    padding: 3px 8px; border-radius: 4px;
-    background: rgba(255,255,255,0.06);
-    color: var(--muted); border: 1px solid var(--border);
-  }
+/* Animated grid */
+.hero-grid-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  animation: gridMove 20s linear infinite;
+}
+@keyframes gridMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 80px 80px; }
+}
 
-  .about-grid {
-    display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start;
-  }
-  .skills-list { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
-  .skill-row { display: flex; align-items: center; gap: 12px; }
-  .skill-name { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); width: 90px; flex-shrink: 0; }
-  .skill-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
-  .skill-fill { height: 100%; background: var(--accent); border-radius: 2px; }
-  .about-text p { color: var(--muted); font-size: 15px; line-height: 1.8; margin-bottom: 1rem; }
-  .stats-row { display: flex; gap: 2rem; margin-top: 2rem; flex-wrap: wrap; }
-  .stat { text-align: center; }
-  .stat-n { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--accent); }
-  .stat-l { font-size: 12px; color: var(--muted); }
+/* Large decorative number */
+.hero-number {
+  position: absolute; right: -0.02em; top: 50%;
+  transform: translateY(-60%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(280px, 35vw, 480px);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(201,168,76,0.08);
+  line-height: 1; z-index: 0;
+  user-select: none;
+  animation: floatNum 8s ease-in-out infinite;
+}
+@keyframes floatNum {
+  0%,100% { transform: translateY(-60%); }
+  50% { transform: translateY(-58%); }
+}
 
-  .contact-box {
-    background: rgba(0,200,150,0.04);
-    border: 1px solid rgba(0,200,150,0.15);
-    border-radius: 16px;
-    padding: 3rem; text-align: center;
-  }
-  .contact-box h2 { margin-bottom: 0.75rem; }
-  .contact-box p { color: var(--muted); margin-bottom: 2rem; font-size: 15px; }
-  .contact-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-  .contact-chip {
-    display: flex; align-items: center; gap: 8px;
-    padding: 0.6rem 1.2rem;
-    border: 1px solid var(--border); border-radius: 6px;
-    font-size: 13px; color: var(--muted);
-    background: var(--card); text-decoration: none;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .contact-chip:hover { border-color: var(--accent); color: var(--accent); }
-  .chip-icon { font-size: 14px; }
+.hero-content { position: relative; z-index: 2; max-width: 900px; }
 
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 2rem 3rem;
-    display: flex; justify-content: space-between; align-items: center;
-    color: var(--muted); font-size: 12px;
-    font-family: 'DM Mono', monospace;
-  }
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.eyebrow-line { width: 40px; height: 1px; background: var(--gold); }
+.eyebrow-text {
+  font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); font-weight: 500;
+}
 
-  .full-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(72px, 12vw, 160px);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  margin-bottom: 2rem;
+}
+.hero-title .italic-word {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  color: var(--gold);
+  font-size: 0.85em;
+}
 
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { gap: 1rem; }
-    .hero { padding: 4rem 1.5rem; }
-    .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
-    section { padding: 4rem 1.5rem; }
-    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
-  }
+.hero-bottom {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: 2rem; flex-wrap: wrap;
+}
+.hero-desc {
+  font-size: 15px; color: rgba(240,234,214,0.55);
+  line-height: 1.7; max-width: 380px; font-weight: 400;
+}
+.hero-cta {
+  display: flex; align-items: center; gap: 1.5rem; flex-shrink: 0;
+}
+.btn-hero {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 1rem 2rem;
+  background: var(--gold);
+  color: #0a0a0a;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  text-decoration: none; border: none; cursor: none;
+  transition: background 0.3s, transform 0.2s;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+.btn-hero:hover { background: var(--gold2); transform: translateY(-2px); }
+.btn-ghost {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(240,234,214,0.5); text-decoration: none;
+  transition: color 0.3s;
+  cursor: none;
+}
+.btn-ghost:hover { color: var(--cream); }
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute; right: 3rem; top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: rgba(240,234,214,0.25);
+  display: flex; align-items: center; gap: 12px;
+}
+.scroll-hint::after {
+  content: ''; display: block; width: 60px; height: 1px;
+  background: rgba(240,234,214,0.15);
+}
+
+/* DIVIDER */
+.section-divider {
+  height: 1px; background: var(--border); margin: 0;
+}
+
+/* MARQUEE */
+.marquee-wrap {
+  overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 1rem 0; background: rgba(201,168,76,0.03);
+}
+.marquee-track {
+  display: flex; gap: 0;
+  animation: marquee 18s linear infinite;
+  width: max-content;
+}
+.marquee-item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px; letter-spacing: 0.3em;
+  color: rgba(201,168,76,0.4);
+  padding: 0 2.5rem;
+  display: flex; align-items: center; gap: 2.5rem;
+  white-space: nowrap;
+}
+.marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); opacity: 0.4; }
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* SERVICES */
+.services { padding: 8rem 3rem; }
+.section-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 5rem; flex-wrap: wrap; gap: 2rem;
+}
+.section-tag {
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 6vw, 80px);
+  line-height: 1; letter-spacing: 0.03em;
+}
+.section-title em {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic; color: var(--gold); font-size: 0.9em;
+}
+.section-count {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 100px; color: transparent;
+  -webkit-text-stroke: 1px rgba(240,234,214,0.07);
+  line-height: 1;
+}
+
+.services-list { display: flex; flex-direction: column; }
+.service-row {
+  display: grid; grid-template-columns: 80px 1fr auto;
+  align-items: center; gap: 2rem;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s;
+  cursor: none;
+  position: relative; overflow: hidden;
+}
+.service-row::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(201,168,76,0.04), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+.service-row:hover::before { transform: translateX(0); }
+.service-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px; letter-spacing: 0.15em;
+  color: rgba(201,168,76,0.4);
+}
+.service-info h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(18px, 2.5vw, 28px);
+  font-weight: 700; margin-bottom: 0.4rem;
+  transition: color 0.3s;
+}
+.service-row:hover .service-info h3 { color: var(--gold); }
+.service-info p { font-size: 13px; color: rgba(240,234,214,0.4); line-height: 1.6; }
+.service-arrow {
+  font-size: 24px; color: rgba(201,168,76,0.2);
+  transform: rotate(-45deg);
+  transition: transform 0.3s, color 0.3s;
+}
+.service-row:hover .service-arrow { transform: rotate(0deg); color: var(--gold); }
+
+/* PROJECTS */
+.projects { padding: 8rem 3rem; background: #050505; }
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1.5px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.project-card {
+  background: #0a0a0a;
+  padding: 3rem;
+  position: relative; overflow: hidden;
+  transition: background 0.4s;
+  cursor: none;
+}
+.project-card:first-child {
+  grid-column: 1 / 2; grid-row: 1 / 2;
+}
+.project-card:nth-child(2) {
+  grid-column: 2 / 3; grid-row: 1 / 3;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: 500px;
+}
+.project-card:nth-child(3) {
+  grid-column: 1 / 2; grid-row: 2 / 3;
+}
+.project-card:hover { background: #111; }
+
+.project-bg {
+  position: absolute; inset: 0; z-index: 0;
+  opacity: 0; transition: opacity 0.5s;
+}
+.project-card:hover .project-bg { opacity: 1; }
+.bg-eda { background: radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.06) 0%, transparent 60%); }
+.bg-dash { background: radial-gradient(ellipse at 20% 80%, rgba(192,57,43,0.06) 0%, transparent 60%); }
+.bg-ml { background: radial-gradient(ellipse at 80% 80%, rgba(201,168,76,0.04) 0%, transparent 60%); }
+
+.project-card-content { position: relative; z-index: 1; }
+.project-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px; letter-spacing: 0.3em;
+  color: rgba(201,168,76,0.35); margin-bottom: 3rem;
+}
+.project-category {
+  font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.75rem;
+}
+.project-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 800; line-height: 1.2;
+  margin-bottom: 1rem;
+}
+.project-card p {
+  font-size: 13px; color: rgba(240,234,214,0.45);
+  line-height: 1.7; margin-bottom: 2rem;
+}
+.project-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.project-pill {
+  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid rgba(201,168,76,0.2);
+  color: rgba(201,168,76,0.6);
+}
+.project-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); text-decoration: none;
+  margin-top: 1.5rem;
+  transition: gap 0.3s;
+}
+.project-link:hover { gap: 14px; }
+
+/* ABOUT */
+.about { padding: 8rem 3rem; }
+.about-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
+}
+.about-left { position: relative; }
+.about-visual {
+  aspect-ratio: 3/4; max-width: 380px;
+  background: #111;
+  border: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.about-visual-inner {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.initials-big {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 180px; color: transparent;
+  -webkit-text-stroke: 1px rgba(201,168,76,0.15);
+  line-height: 1; user-select: none;
+}
+.about-visual-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 1.5rem;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+}
+.about-visual-label p {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(240,234,214,0.4);
+}
+.about-visual-label h4 {
+  font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700;
+}
+.about-badge {
+  position: absolute; top: 2rem; right: -1rem;
+  background: var(--gold); color: #0a0a0a;
+  padding: 0.5rem 1rem;
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  font-weight: 700;
+}
+
+.about-right { padding-top: 1rem; }
+.about-right .section-tag { margin-bottom: 0.5rem; }
+.about-right .section-title { font-size: clamp(36px, 5vw, 64px); margin-bottom: 2rem; }
+.about-body p {
+  font-size: 15px; color: rgba(240,234,214,0.55);
+  line-height: 1.8; margin-bottom: 1.2rem; font-weight: 400;
+}
+
+.skills-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  margin-top: 2.5rem;
+}
+.skill-item {
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  position: relative; overflow: hidden;
+  transition: border-color 0.3s;
+}
+.skill-item:hover { border-color: rgba(201,168,76,0.3); }
+.skill-bar-bg {
+  position: absolute; bottom: 0; left: 0;
+  height: 2px; width: 100%; background: rgba(201,168,76,0.07);
+}
+.skill-bar-fill {
+  position: absolute; bottom: 0; left: 0;
+  height: 2px; background: var(--gold);
+  transition: width 1s ease;
+}
+.skill-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(240,234,214,0.5); margin-bottom: 4px; }
+.skill-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--cream); letter-spacing: 0.05em; }
+
+/* CONTACT */
+.contact {
+  padding: 8rem 3rem 6rem;
+  background: #050505;
+  position: relative; overflow: hidden;
+}
+.contact::before {
+  content: '';
+  position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.contact-inner { max-width: 800px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+.contact-eyebrow {
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
+  margin-bottom: 2rem;
+}
+.contact-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(60px, 10vw, 130px);
+  line-height: 0.9; letter-spacing: 0.03em;
+  margin-bottom: 1.5rem;
+}
+.contact-title em {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic; color: var(--gold); font-size: 0.85em;
+  display: block;
+}
+.contact-sub {
+  font-size: 15px; color: rgba(240,234,214,0.4);
+  line-height: 1.7; margin-bottom: 3.5rem;
+}
+.contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.contact-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 0.9rem 2rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+  text-decoration: none; cursor: none;
+  transition: all 0.3s;
+}
+.contact-btn-primary {
+  background: var(--gold); color: #0a0a0a;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+.contact-btn-primary:hover { background: var(--gold2); }
+.contact-btn-ghost {
+  border: 1px solid rgba(240,234,214,0.15);
+  color: rgba(240,234,214,0.5);
+}
+.contact-btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+/* FOOTER */
+footer {
+  padding: 2rem 3rem;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(240,234,214,0.2);
+  flex-wrap: wrap; gap: 1rem;
+}
+footer span b { color: rgba(201,168,76,0.5); font-weight: 400; }
+
+/* ANIMATIONS */
+.fade-up {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 768px) {
+  nav { padding: 1.5rem; }
+  .nav-links { display: none; }
+  .hero { padding: 0 1.5rem 3rem; }
+  .hero-number { font-size: 200px; right: -0.05em; }
+  .hero-title { font-size: 72px; }
+  .services, .about, .contact { padding: 5rem 1.5rem; }
+  .projects { padding: 5rem 0; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card:nth-child(2) { grid-column: 1; grid-row: auto; min-height: 300px; }
+  .project-card:nth-child(3) { grid-column: 1; grid-row: auto; }
+  .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .about-visual { max-width: 100%; }
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+  .contact-title { font-size: 60px; }
+}
 </style>
 </head>
 <body>
 
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
 <nav>
-  <div class="logo">[ HH Insights ]</div>
+  <div class="nav-logo">HH<span>.</span>INSIGHTS</div>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#projects">Projects</a></li>
@@ -277,198 +543,277 @@
   </ul>
 </nav>
 
-<div class="hero">
-  <div class="hero-grid">
-    <div>
-      <div class="hero-tag">Data Science &amp; Analytics</div>
-      <h1>Turning <em>data</em> into decisions</h1>
-      <p class="hero-sub">I help companies extract meaningful insights, build predictive models, and create dashboards that make complex data easy to act on.</p>
-      <div class="btn-row">
-        <a href="#contact" class="btn btn-primary">Book a free call</a>
-        <a href="#projects" class="btn btn-outline">See my work</a>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-number">∂</div>
+  <div class="scroll-hint">Scroll down</div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow fade-up">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">Data Science &amp; Analytics · Toronto, CA</span>
+    </div>
+    <h1 class="hero-title fade-up" style="transition-delay:0.1s">
+      DATA<br>
+      THAT <span class="italic-word">speaks</span><br>
+      FOR ITSELF
+    </h1>
+    <div class="hero-bottom fade-up" style="transition-delay:0.2s">
+      <p class="hero-desc">Hassan Hamze turns raw numbers into strategies. EDA, dashboards, predictive models — built for companies that want answers, not more spreadsheets.</p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn-hero">Start a project ↗</a>
+        <a href="#projects" class="btn-ghost">View work</a>
       </div>
     </div>
-    <div class="terminal">
-      <div class="terminal-bar">
-        <div class="dot r"></div>
-        <div class="dot y"></div>
-        <div class="dot g"></div>
-        <span class="term-title">analyst.py</span>
-      </div>
-      <div class="terminal-body">
-        <div class="t-comment"># About me</div>
-        <div><span class="t-brace">{</span></div>
-        <div>&nbsp;&nbsp;<span class="t-key">"name"</span><span class="t-brace">: </span><span class="t-str">"Hassan Hamze"</span><span class="t-brace">,</span></div>
-        <div>&nbsp;&nbsp;<span class="t-key">"company"</span><span class="t-brace">: </span><span class="t-str">"HH Insights"</span><span class="t-brace">,</span></div>
-        <div>&nbsp;&nbsp;<span class="t-key">"tools"</span><span class="t-brace">: </span><span class="t-arr">["Python", "SQL", "R",</span></div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-arr">"Tableau", "Power BI"]</span><span class="t-brace">,</span></div>
-        <div>&nbsp;&nbsp;<span class="t-key">"available"</span><span class="t-brace">: </span><span class="t-num">true</span></div>
-        <div><span class="t-brace">}</span><span class="cursor"></span></div>
-      </div>
-    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item">Exploratory Analysis <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Predictive Modeling <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Data Dashboards <span class="marquee-dot"></span></div>
+    <div class="marquee-item">SQL · Python · R <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Tableau · Power BI <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Machine Learning <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Data Cleaning <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Business Intelligence <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Exploratory Analysis <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Predictive Modeling <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Data Dashboards <span class="marquee-dot"></span></div>
+    <div class="marquee-item">SQL · Python · R <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Tableau · Power BI <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Machine Learning <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Data Cleaning <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Business Intelligence <span class="marquee-dot"></span></div>
   </div>
 </div>
 
-<hr class="full-divider">
-
-<section id="services">
-  <div class="section-label">What I offer</div>
-  <h2>Services</h2>
-  <p class="section-sub">Focused offerings built around what businesses actually need.</p>
-  <div class="services-grid">
-    <div class="service-card">
-      <div class="service-icon">📊</div>
-      <h3>Exploratory Analysis</h3>
-      <p>Deep-dive into your data to uncover patterns, anomalies, and actionable insights delivered as a clear report.</p>
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header">
+    <div class="fade-up">
+      <div class="section-tag">What I do</div>
+      <h2 class="section-title">Services <em>offered</em></h2>
     </div>
-    <div class="service-card">
-      <div class="service-icon">📈</div>
-      <h3>Dashboards & Reporting</h3>
-      <p>Interactive Tableau or Power BI dashboards your team can use daily — no technical background needed.</p>
+    <div class="section-count fade-up">04</div>
+  </div>
+  <div class="services-list">
+    <div class="service-row fade-up">
+      <div class="service-num">01</div>
+      <div class="service-info">
+        <h3>Exploratory Data Analysis</h3>
+        <p>Deep-dive into your dataset — patterns, anomalies, and actionable insights delivered as a clear executive report.</p>
+      </div>
+      <div class="service-arrow">↗</div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">🤖</div>
-      <h3>Predictive Modeling</h3>
-      <p>Churn prediction, demand forecasting, and classification models built and explained in plain language.</p>
+    <div class="service-row fade-up">
+      <div class="service-num">02</div>
+      <div class="service-info">
+        <h3>Dashboards &amp; Reporting</h3>
+        <p>Interactive Tableau or Power BI dashboards your whole team can use — no technical background required.</p>
+      </div>
+      <div class="service-arrow">↗</div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">🧹</div>
-      <h3>Data Cleaning</h3>
-      <p>Transform messy, inconsistent, or incomplete datasets into clean, analysis-ready tables.</p>
+    <div class="service-row fade-up">
+      <div class="service-num">03</div>
+      <div class="service-info">
+        <h3>Predictive Modeling</h3>
+        <p>Churn prediction, demand forecasting, classification — built, validated, and explained in plain language.</p>
+      </div>
+      <div class="service-arrow">↗</div>
+    </div>
+    <div class="service-row fade-up">
+      <div class="service-num">04</div>
+      <div class="service-info">
+        <h3>Data Cleaning &amp; Wrangling</h3>
+        <p>Transform messy, inconsistent datasets into clean, structured, analysis-ready tables fast.</p>
+      </div>
+      <div class="service-arrow">↗</div>
     </div>
   </div>
 </section>
 
-<hr class="full-divider">
-
-<section id="projects">
-  <div class="section-label">My work</div>
-  <h2>Projects</h2>
-  <p class="section-sub">Real analyses using real data — each one structured like a client deliverable.</p>
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div style="padding: 0 3rem; margin-bottom: 4rem;" class="fade-up">
+    <div class="section-tag">Selected work</div>
+    <h2 class="section-title">Recent <em>projects</em></h2>
+  </div>
   <div class="projects-grid">
 
-    <div class="project-card">
-      <div class="project-banner b1">
-        <svg class="banner-chart" viewBox="0 0 300 90" xmlns="http://www.w3.org/2000/svg">
-          <polyline points="0,70 40,55 80,60 120,35 160,40 200,20 240,25 300,10" fill="none" stroke="rgba(0,200,150,0.5)" stroke-width="2"/>
-          <polyline points="0,70 40,55 80,60 120,35 160,40 200,20 240,25 300,10 300,90 0,90" fill="rgba(0,200,150,0.08)" stroke="none"/>
-        </svg>
-      </div>
-      <div class="project-body">
-        <span class="proj-tag">EDA + Reporting</span>
+    <div class="project-card fade-up">
+      <div class="project-bg bg-eda"></div>
+      <div class="project-card-content">
+        <div class="project-num">PROJECT — 001</div>
+        <div class="project-category">EDA + Reporting</div>
         <h3>Superstore Sales Analysis</h3>
-        <p>Regional performance breakdown, product profitability, and customer segment insights with executive summary.</p>
-        <div class="tech-pills">
-          <span class="pill">Python</span>
-          <span class="pill">Pandas</span>
-          <span class="pill">Matplotlib</span>
-          <span class="pill">Seaborn</span>
+        <p>Regional performance breakdown, product profitability, and customer segment insights with executive summary report.</p>
+        <div class="project-pills">
+          <span class="project-pill">Python</span>
+          <span class="project-pill">Pandas</span>
+          <span class="project-pill">Seaborn</span>
         </div>
+        <a href="https://github.com/hasanhamze" class="project-link">View on GitHub →</a>
       </div>
     </div>
 
-    <div class="project-card">
-      <div class="project-banner b2">
-        <svg class="banner-chart" viewBox="0 0 300 90" xmlns="http://www.w3.org/2000/svg">
-          <rect x="20" y="30" width="30" height="60" fill="rgba(55,138,221,0.4)" rx="2"/>
-          <rect x="65" y="15" width="30" height="75" fill="rgba(55,138,221,0.4)" rx="2"/>
-          <rect x="110" y="45" width="30" height="45" fill="rgba(55,138,221,0.4)" rx="2"/>
-          <rect x="155" y="20" width="30" height="70" fill="rgba(55,138,221,0.6)" rx="2"/>
-          <rect x="200" y="10" width="30" height="80" fill="rgba(55,138,221,0.4)" rx="2"/>
-          <rect x="245" y="35" width="30" height="55" fill="rgba(55,138,221,0.4)" rx="2"/>
-        </svg>
-      </div>
-      <div class="project-body">
-        <span class="proj-tag">Dashboard</span>
-        <h3>COVID-19 Global Tracker</h3>
-        <p>Live-updating Tableau dashboard showing case trends, vaccination rates, and regional comparisons.</p>
-        <div class="tech-pills">
-          <span class="pill">Tableau</span>
-          <span class="pill">SQL</span>
-          <span class="pill">Excel</span>
+    <div class="project-card fade-up" style="transition-delay:0.1s">
+      <div class="project-bg bg-dash"></div>
+      <div class="project-card-content">
+        <div class="project-num">PROJECT — 002</div>
+        <div class="project-category">Dashboard</div>
+        <h3>COVID-19 Global Tracker Dashboard</h3>
+        <p>Live Tableau dashboard showing case trends, vaccination rates, and regional comparisons across 150+ countries.</p>
+        <div class="project-pills">
+          <span class="project-pill">Tableau</span>
+          <span class="project-pill">SQL</span>
+          <span class="project-pill">Excel</span>
         </div>
+        <a href="https://github.com/hasanhamze" class="project-link">View on GitHub →</a>
       </div>
     </div>
 
-    <div class="project-card">
-      <div class="project-banner b3">
-        <svg class="banner-chart" viewBox="0 0 300 90" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="40" cy="45" r="5" fill="rgba(240,192,106,0.6)"/>
-          <circle cx="80" cy="30" r="7" fill="rgba(240,192,106,0.8)"/>
-          <circle cx="120" cy="55" r="4" fill="rgba(240,192,106,0.5)"/>
-          <circle cx="155" cy="20" r="9" fill="rgba(240,192,106,0.9)"/>
-          <circle cx="195" cy="40" r="5" fill="rgba(240,192,106,0.6)"/>
-          <circle cx="230" cy="60" r="6" fill="rgba(240,192,106,0.7)"/>
-          <circle cx="265" cy="25" r="8" fill="rgba(240,192,106,0.8)"/>
-          <line x1="30" y1="75" x2="280" y2="15" stroke="rgba(240,192,106,0.3)" stroke-width="1" stroke-dasharray="4,4"/>
-        </svg>
-      </div>
-      <div class="project-body">
-        <span class="proj-tag">Machine Learning</span>
+    <div class="project-card fade-up" style="transition-delay:0.2s">
+      <div class="project-bg bg-ml"></div>
+      <div class="project-card-content">
+        <div class="project-num">PROJECT — 003</div>
+        <div class="project-category">Machine Learning</div>
         <h3>Customer Churn Prediction</h3>
-        <p>Gradient boosting model predicting churn with 89% accuracy — includes feature importance and business recommendations.</p>
-        <div class="tech-pills">
-          <span class="pill">Python</span>
-          <span class="pill">Scikit-learn</span>
-          <span class="pill">XGBoost</span>
-          <span class="pill">SHAP</span>
+        <p>XGBoost model achieving 89% accuracy — includes SHAP feature importance and business action recommendations.</p>
+        <div class="project-pills">
+          <span class="project-pill">Python</span>
+          <span class="project-pill">XGBoost</span>
+          <span class="project-pill">SHAP</span>
+        </div>
+        <a href="https://github.com/hasanhamze" class="project-link">View on GitHub →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-left fade-up">
+      <div class="about-visual">
+        <div class="about-visual-inner">
+          <div class="initials-big">HH</div>
+        </div>
+        <div class="about-visual-label">
+          <p>Founder &amp; Analyst</p>
+          <h4>Hassan Hamze</h4>
+        </div>
+      </div>
+      <div class="about-badge">Available for hire</div>
+    </div>
+    <div class="about-right fade-up" style="transition-delay:0.15s">
+      <div class="section-tag">Who I am</div>
+      <h2 class="section-title">The person<br><em>behind the data</em></h2>
+      <div class="about-body">
+        <p>I'm Hassan Hamze — a data science student based in Toronto with a sharp eye for what numbers are actually trying to say. I founded HH Insights to bring serious analytical firepower to companies that don't have it in-house.</p>
+        <p>My work sits at the intersection of rigorous analysis and clear communication. I don't just build models — I translate them into decisions your team can act on tomorrow.</p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-item">
+          <div class="skill-label">Python</div>
+          <div class="skill-val">88%</div>
+          <div class="skill-bar-bg"></div>
+          <div class="skill-bar-fill" style="width:88%"></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-label">SQL</div>
+          <div class="skill-val">80%</div>
+          <div class="skill-bar-bg"></div>
+          <div class="skill-bar-fill" style="width:80%"></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-label">Tableau</div>
+          <div class="skill-val">75%</div>
+          <div class="skill-bar-bg"></div>
+          <div class="skill-bar-fill" style="width:75%"></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-label">R</div>
+          <div class="skill-val">72%</div>
+          <div class="skill-bar-bg"></div>
+          <div class="skill-bar-fill" style="width:72%"></div>
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
-<hr class="full-divider">
-
-<section id="about">
-  <div class="about-grid">
-    <div>
-      <div class="section-label">Background</div>
-      <h2>About me</h2>
-      <div class="skills-list">
-        <div class="skill-row"><span class="skill-name">Python</span><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">SQL</span><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">R</span><div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Tableau</span><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Power BI</span><div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">ML / Stats</span><div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div></div>
-      </div>
-      <div class="stats-row">
-        <div class="stat"><div class="stat-n">3+</div><div class="stat-l">Projects</div></div>
-        <div class="stat"><div class="stat-n">4</div><div class="stat-l">Services</div></div>
-        <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Curiosity</div></div>
-      </div>
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner fade-up">
+    <div class="contact-eyebrow">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">Let's work together</span>
+      <div class="eyebrow-line"></div>
     </div>
-    <div class="about-text">
-      <p>I'm Hassan Hamze, a data science student passionate about helping businesses make better decisions through data. I combine technical skills in Python, R, and SQL with a knack for communicating findings clearly to non-technical stakeholders.</p>
-      <p>Whether it's cleaning a messy dataset, building a predictive model, or turning raw numbers into a dashboard your team actually uses — I focus on delivering work that creates real impact.</p>
-      <p>I'm currently available for freelance projects and open to longer-term collaborations. If you have data and questions, let's talk.</p>
-      <div style="margin-top:1.5rem;">
-        <a href="#contact" class="btn btn-primary">Work with me →</a>
-      </div>
+    <h2 class="contact-title">
+      GOT
+      <em>data?</em>
+      LET'S TALK.
+    </h2>
+    <p class="contact-sub">Book a free 30-minute consultation. No commitment — just a real conversation about your data challenges and how I can help.</p>
+    <div class="contact-links">
+      <a href="mailto:hasanhamze2004@gmail.com" class="contact-btn contact-btn-primary">✉ hasanhamze2004@gmail.com</a>
+      <a href="https://github.com/hasanhamze" target="_blank" class="contact-btn contact-btn-ghost">⌥ github.com/hasanhamze</a>
     </div>
   </div>
 </section>
 
-<hr class="full-divider">
-
-<section id="contact">
-  <div class="contact-box">
-    <div class="section-label" style="text-align:center">Let's work together</div>
-    <h2>Got data? Let's talk.</h2>
-    <p>Book a free 30-minute consultation — no commitment, just a conversation about your data challenges.</p>
-    <div class="contact-row">
-      <a href="mailto:hasanhamze2004@gmail.com" class="contact-chip"><span class="chip-icon">✉</span> hasanhamze2004@gmail.com</a>
-      <a href="https://github.com/hasanhamze" target="_blank" class="contact-chip"><span class="chip-icon">⌥</span> github.com/hasanhamze</a>
-    </div>
-  </div>
-</section>
-
+<!-- FOOTER -->
 <footer>
-  <span>© 2026 Hassan Hamze · HH Insights</span>
-  <span>hhinsights.ca · Available for freelance</span>
+  <span>© 2026 <b>Hassan Hamze</b> · HH Insights</span>
+  <span>hhinsights.ca</span>
+  <span>Toronto, <b>CA</b></span>
 </footer>
 
+<script>
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+
+function animateRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.querySelectorAll('a, button, .service-row, .project-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '20px';
+    cursor.style.height = '20px';
+    ring.style.width = '56px';
+    ring.style.height = '56px';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '12px';
+    cursor.style.height = '12px';
+    ring.style.width = '36px';
+    ring.style.height = '36px';
+  });
+});
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
