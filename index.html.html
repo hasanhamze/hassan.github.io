@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0d1b2a;
+    --navy2: #1a2e42;
+    --accent: #00c896;
+    --accent2: #00a87e;
+    --light: #f4f7f2;
+    --muted: #8a9bb0;
+    --border: rgba(255,255,255,0.08);
+    --card: rgba(255,255,255,0.04);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: #e8edf2;
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.1rem 3rem;
+    background: rgba(13,27,42,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 13px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: #e8edf2; }
+
+  /* HERO */
+  .hero {
+    min-height: 90vh;
+    display: flex; align-items: center;
+    padding: 6rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -10%; right: -5%;
+    width: 55%; height: 120%;
+    background: radial-gradient(ellipse at center, rgba(0,200,150,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+    max-width: 1100px; margin: 0 auto; width: 100%;
+  }
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; color: var(--accent);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hero-tag::before {
+    content: ''; display: inline-block;
+    width: 28px; height: 1px; background: var(--accent);
+  }
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 1.2rem;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 16px; color: var(--muted); line-height: 1.7;
+    margin-bottom: 2rem; max-width: 420px;
+  }
+  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px; font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--accent); color: #0d1b2a;
+  }
+  .btn-primary:hover { background: #00daa8; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #e8edf2;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* HERO RIGHT — terminal card */
+  .terminal {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .terminal-bar {
+    display: flex; align-items: center; gap: 6px;
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.r { background: #ff5f57; }
+  .dot.y { background: #ffbd2e; }
+  .dot.g { background: #28c840; }
+  .term-title {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: var(--muted); margin-left: auto;
+  }
+  .terminal-body { padding: 1.5rem; font-family: 'DM Mono', monospace; font-size: 13px; line-height: 2; }
+  .t-comment { color: #4a6080; }
+  .t-key { color: #7eb8f7; }
+  .t-str { color: var(--accent); }
+  .t-arr { color: #f0c06a; }
+  .t-num { color: #f08a7a; }
+  .t-brace { color: var(--muted); }
+  .cursor { display: inline-block; width: 8px; height: 14px; background: var(--accent); animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 2px; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* SECTION */
+  section { padding: 6rem 3rem; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color: var(--accent);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    color: #fff; margin-bottom: 0.5rem;
+  }
+  .section-sub { color: var(--muted); font-size: 15px; margin-bottom: 3rem; }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .service-card:hover { border-color: rgba(0,200,150,0.3); transform: translateY(-2px); }
+  .service-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: rgba(0,200,150,0.1);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 18px;
+  }
+  .service-card h3 { font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 0.5rem; }
+  .service-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .project-card:hover { transform: translateY(-3px); border-color: rgba(0,200,150,0.3); }
+  .project-banner {
+    height: 110px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.3);
+  }
+  .project-banner.b1 { background: linear-gradient(135deg, #0d2e25 0%, #0d3d2e 100%); }
+  .project-banner.b2 { background: linear-gradient(135deg, #0d1f3d 0%, #0d2a50 100%); }
+  .project-banner.b3 { background: linear-gradient(135deg, #2e1a0d 0%, #3d2a0d 100%); }
+  .banner-chart { position: absolute; bottom: 0; left: 0; right: 0; }
+  .project-body { padding: 1.25rem; }
+  .proj-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: var(--accent); letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .project-body h3 { font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 0.5rem; }
+  .project-body p { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+  .tech-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    padding: 3px 8px; border-radius: 4px;
+    background: rgba(255,255,255,0.06);
+    color: var(--muted); border: 1px solid var(--border);
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start;
+  }
+  .skills-list { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .skill-row { display: flex; align-items: center; gap: 12px; }
+  .skill-name { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); width: 90px; flex-shrink: 0; }
+  .skill-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+  .skill-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+  .about-text p { color: var(--muted); font-size: 15px; line-height: 1.8; margin-bottom: 1rem; }
+  .stats-row { display: flex; gap: 2rem; margin-top: 2rem; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat-n { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--accent); }
+  .stat-l { font-size: 12px; color: var(--muted); }
+
+  /* CONTACT */
+  .contact-box {
+    background: rgba(0,200,150,0.04);
+    border: 1px solid rgba(0,200,150,0.15);
+    border-radius: 16px;
+    padding: 3rem; text-align: center;
+  }
+  .contact-box h2 { margin-bottom: 0.75rem; }
+  .contact-box p { color: var(--muted); margin-bottom: 2rem; font-size: 15px; }
+  .contact-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .contact-chip {
+    display: flex; align-items: center; gap: 8px;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--border); border-radius: 6px;
+    font-size: 13px; color: var(--muted);
+    background: var(--card); text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .contact-chip:hover { border-color: var(--accent); color: var(--accent); }
+  .chip-icon { font-size: 14px; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--muted); font-size: 12px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* DIVIDER */
+  .full-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* SVG bar chart in project card */
+  svg text { font-family: 'DM Mono', monospace; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">[ your.name ]</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-tag">Data Science &amp; Analytics</div>
+      <h1>Turning <em>data</em> into decisions</h1>
+      <p class="hero-sub">I help companies extract meaningful insights, build predictive models, and create dashboards that make complex data easy to act on.</p>
+      <div class="btn-row">
+        <a href="#contact" class="btn btn-primary">Book a free call</a>
+        <a href="#projects" class="btn btn-outline">See my work</a>
+      </div>
+    </div>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="dot r"></div>
+        <div class="dot y"></div>
+        <div class="dot g"></div>
+        <span class="term-title">analyst.py</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-comment"># About me</div>
+        <div><span class="t-brace">{</span></div>
+        <div>&nbsp;&nbsp;<span class="t-key">"name"</span><span class="t-brace">: </span><span class="t-str">"Your Name"</span><span class="t-brace">,</span></div>
+        <div>&nbsp;&nbsp;<span class="t-key">"role"</span><span class="t-brace">: </span><span class="t-str">"Data Scientist"</span><span class="t-brace">,</span></div>
+        <div>&nbsp;&nbsp;<span class="t-key">"tools"</span><span class="t-brace">: </span><span class="t-arr">["Python", "SQL", "R",</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-arr">"Tableau", "Power BI"]</span><span class="t-brace">,</span></div>
+        <div>&nbsp;&nbsp;<span class="t-key">"available"</span><span class="t-brace">: </span><span class="t-num">true</span></div>
+        <div><span class="t-brace">}</span><span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="full-divider">
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">What I offer</div>
+  <h2>Services</h2>
+  <p class="section-sub">Focused offerings built around what businesses actually need.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <h3>Exploratory Analysis</h3>
+      <p>Deep-dive into your data to uncover patterns, anomalies, and actionable insights delivered as a clear report.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📈</div>
+      <h3>Dashboards & Reporting</h3>
+      <p>Interactive Tableau or Power BI dashboards your team can use daily — no technical background needed.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🤖</div>
+      <h3>Predictive Modeling</h3>
+      <p>Churn prediction, demand forecasting, and classification models built and explained in plain language.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🧹</div>
+      <h3>Data Cleaning</h3>
+      <p>Transform messy, inconsistent, or incomplete datasets into clean, analysis-ready tables.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">My work</div>
+  <h2>Projects</h2>
+  <p class="section-sub">Real analyses using real data — each one structured like a client deliverable.</p>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-banner b1">
+        <svg class="banner-chart" viewBox="0 0 300 90" xmlns="http://www.w3.org/2000/svg">
+          <polyline points="0,70 40,55 80,60 120,35 160,40 200,20 240,25 300,10" fill="none" stroke="rgba(0,200,150,0.5)" stroke-width="2"/>
+          <polyline points="0,70 40,55 80,60 120,35 160,40 200,20 240,25 300,10 300,90 0,90" fill="rgba(0,200,150,0.08)" stroke="none"/>
+        </svg>
+      </div>
+      <div class="project-body">
+        <span class="proj-tag">EDA + Reporting</span>
+        <h3>Superstore Sales Analysis</h3>
+        <p>Regional performance breakdown, product profitability, and customer segment insights with executive summary.</p>
+        <div class="tech-pills">
+          <span class="pill">Python</span>
+          <span class="pill">Pandas</span>
+          <span class="pill">Matplotlib</span>
+          <span class="pill">Seaborn</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-banner b2">
+        <svg class="banner-chart" viewBox="0 0 300 90" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="30" width="30" height="60" fill="rgba(55,138,221,0.4)" rx="2"/>
+          <rect x="65" y="15" width="30" height="75" fill="rgba(55,138,221,0.4)" rx="2"/>
+          <rect x="110" y="45" width="30" height="45" fill="rgba(55,138,221,0.4)" rx="2"/>
+          <rect x="155" y="20" width="30" height="70" fill="rgba(55,138,221,0.6)" rx="2"/>
+          <rect x="200" y="10" width="30" height="80" fill="rgba(55,138,221,0.4)" rx="2"/>
+          <rect x="245" y="35" width="30" height="55" fill="rgba(55,138,221,0.4)" rx="2"/>
+        </svg>
+      </div>
+      <div class="project-body">
+        <span class="proj-tag">Dashboard</span>
+        <h3>COVID-19 Global Tracker</h3>
+        <p>Live-updating Tableau dashboard showing case trends, vaccination rates, and regional comparisons.</p>
+        <div class="tech-pills">
+          <span class="pill">Tableau</span>
+          <span class="pill">SQL</span>
+          <span class="pill">Excel</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-banner b3">
+        <svg class="banner-chart" viewBox="0 0 300 90" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="45" r="5" fill="rgba(240,192,106,0.6)"/>
+          <circle cx="80" cy="30" r="7" fill="rgba(240,192,106,0.8)"/>
+          <circle cx="120" cy="55" r="4" fill="rgba(240,192,106,0.5)"/>
+          <circle cx="155" cy="20" r="9" fill="rgba(240,192,106,0.9)"/>
+          <circle cx="195" cy="40" r="5" fill="rgba(240,192,106,0.6)"/>
+          <circle cx="230" cy="60" r="6" fill="rgba(240,192,106,0.7)"/>
+          <circle cx="265" cy="25" r="8" fill="rgba(240,192,106,0.8)"/>
+          <line x1="30" y1="75" x2="280" y2="15" stroke="rgba(240,192,106,0.3)" stroke-width="1" stroke-dasharray="4,4"/>
+        </svg>
+      </div>
+      <div class="project-body">
+        <span class="proj-tag">Machine Learning</span>
+        <h3>Customer Churn Prediction</h3>
+        <p>Gradient boosting model predicting churn with 89% accuracy — includes feature importance and business recommendations.</p>
+        <div class="tech-pills">
+          <span class="pill">Python</span>
+          <span class="pill">Scikit-learn</span>
+          <span class="pill">XGBoost</span>
+          <span class="pill">SHAP</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div>
+      <div class="section-label">Background</div>
+      <h2>About me</h2>
+      <div class="skills-list">
+        <div class="skill-row"><span class="skill-name">Python</span><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
+        <div class="skill-row"><span class="skill-name">SQL</span><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
+        <div class="skill-row"><span class="skill-name">R</span><div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Tableau</span><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Power BI</span><div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div></div>
+        <div class="skill-row"><span class="skill-name">ML / Stats</span><div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div></div>
+      </div>
+      <div class="stats-row">
+        <div class="stat"><div class="stat-n">3+</div><div class="stat-l">Projects</div></div>
+        <div class="stat"><div class="stat-n">4</div><div class="stat-l">Services</div></div>
+        <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Curiosity</div></div>
+      </div>
+    </div>
+    <div class="about-text">
+      <p>I'm a data science student passionate about helping businesses make better decisions through data. I combine technical skills in Python, R, and SQL with a knack for communicating findings clearly to non-technical stakeholders.</p>
+      <p>Whether it's cleaning a messy dataset, building a predictive model, or turning raw numbers into a dashboard your team actually uses — I focus on delivering work that creates real impact.</p>
+      <p>I'm currently available for freelance projects and open to longer-term collaborations. If you have data and questions, let's talk.</p>
+      <div style="margin-top:1.5rem;">
+        <a href="#contact" class="btn btn-primary">Work with me →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-box">
+    <div class="section-label" style="text-align:center">Let's work together</div>
+    <h2>Got data? Let's talk.</h2>
+    <p>Book a free 30-minute consultation — no commitment, just a conversation about your data challenges.</p>
+    <div class="contact-row">
+      <a href="mailto:you@email.com" class="contact-chip"><span class="chip-icon">✉</span> you@email.com</a>
+      <a href="https://linkedin.com" class="contact-chip"><span class="chip-icon">in</span> LinkedIn</a>
+      <a href="https://github.com" class="contact-chip"><span class="chip-icon">⌥</span> GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Your Name</span>
+  <span>Built with intention · Available for freelance</span>
+</footer>
+
+</body>
+</html>
