@@ -509,21 +509,59 @@ footer span b { color: rgba(201,168,76,0.5); font-weight: 400; }
 }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
 
+@media (hover: none) {
+  body { cursor: auto; }
+  #cursor, #cursor-ring { display: none; }
+  .btn-hero, .btn-ghost, .service-row, .project-card { cursor: pointer; }
+}
+
 @media (max-width: 768px) {
-  nav { padding: 1.5rem; }
+  nav { padding: 1.2rem 1.5rem; background: rgba(10,10,10,0.97); }
   .nav-links { display: none; }
-  .hero { padding: 0 1.5rem 3rem; }
-  .hero-number { font-size: 200px; right: -0.05em; }
-  .hero-title { font-size: 72px; }
-  .services, .about, .contact { padding: 5rem 1.5rem; }
-  .projects { padding: 5rem 0; }
-  .projects-grid { grid-template-columns: 1fr; }
-  .project-card:nth-child(2) { grid-column: 1; grid-row: auto; min-height: 300px; }
+
+  .hero { min-height: 100svh; padding: 7rem 1.5rem 3rem; justify-content: center; }
+  .hero-number { font-size: 52vw; right: -0.05em; top: 40%; -webkit-text-stroke: 1px rgba(201,168,76,0.06); }
+  .scroll-hint { display: none; }
+  .hero-title { font-size: clamp(52px, 15vw, 80px); margin-bottom: 1.5rem; }
+  .hero-bottom { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  .hero-desc { font-size: 14px; max-width: 100%; }
+  .hero-cta { flex-direction: column; align-items: flex-start; gap: 1rem; width: 100%; }
+  .btn-hero { width: 100%; justify-content: center; font-size: 11px; padding: 0.9rem 1.5rem; }
+
+  .services { padding: 4rem 1.5rem; }
+  .section-header { margin-bottom: 2.5rem; }
+  .section-title { font-size: clamp(32px, 10vw, 52px); }
+  .section-count { display: none; }
+  .service-row { grid-template-columns: 44px 1fr 28px; gap: 0.75rem; padding: 1.5rem 0; }
+  .service-info h3 { font-size: 16px; }
+  .service-info p { font-size: 12px; }
+
+  .projects { padding: 4rem 0; }
+  .projects > div:first-child { padding: 0 1.5rem; margin-bottom: 2rem; }
+  .projects-grid { grid-template-columns: 1fr; gap: 1px; }
+  .project-card { padding: 2rem 1.5rem; }
+  .project-card:nth-child(2) { grid-column: 1; grid-row: auto; min-height: auto; }
   .project-card:nth-child(3) { grid-column: 1; grid-row: auto; }
-  .about-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .about-visual { max-width: 100%; }
-  .skills-grid { grid-template-columns: 1fr 1fr; }
-  .contact-title { font-size: 60px; }
+  .project-num { margin-bottom: 1.5rem; }
+  .project-card h3 { font-size: 18px; }
+
+  .about { padding: 4rem 1.5rem; }
+  .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .about-visual { max-width: 100%; aspect-ratio: 4/3; }
+  .initials-big { font-size: 100px; }
+  .about-badge { right: 0; }
+  .skills-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .skill-item { padding: 0.75rem 1rem; }
+  .skill-val { font-size: 22px; }
+
+  .contact { padding: 4rem 1.5rem; }
+  .contact-title { font-size: clamp(44px, 13vw, 72px); }
+  .contact-sub { font-size: 14px; }
+  .contact-links { flex-direction: column; align-items: stretch; }
+  .contact-btn { justify-content: center; font-size: 10px; padding: 0.85rem 1rem; text-align: center; word-break: break-all; }
+  .contact-btn-primary { clip-path: none; border-radius: 2px; }
+
+  footer { flex-direction: column; gap: 0.4rem; text-align: center; padding: 1.5rem; font-size: 10px; }
 }
 </style>
 </head>
