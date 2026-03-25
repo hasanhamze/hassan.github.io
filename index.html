@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio</title>
+<title>HH Insights — Hassan Hamze</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,7 +27,6 @@
     font-size: 15px;
   }
 
-  /* NAV */
   nav {
     position: sticky; top: 0; z-index: 100;
     display: flex; justify-content: space-between; align-items: center;
@@ -50,7 +49,6 @@
   }
   .nav-links a:hover { color: #e8edf2; }
 
-  /* HERO */
   .hero {
     min-height: 90vh;
     display: flex; align-items: center;
@@ -88,10 +86,7 @@
     color: #fff;
     margin-bottom: 1.2rem;
   }
-  h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
+  h1 em { font-style: italic; color: var(--accent); }
   .hero-sub {
     font-size: 16px; color: var(--muted); line-height: 1.7;
     margin-bottom: 2rem; max-width: 420px;
@@ -102,12 +97,9 @@
     padding: 0.75rem 1.5rem;
     border-radius: 6px; font-size: 14px; font-weight: 500;
     text-decoration: none; cursor: pointer;
-    transition: all 0.2s;
-    border: none;
+    transition: all 0.2s; border: none;
   }
-  .btn-primary {
-    background: var(--accent); color: #0d1b2a;
-  }
+  .btn-primary { background: var(--accent); color: #0d1b2a; }
   .btn-primary:hover { background: #00daa8; transform: translateY(-1px); }
   .btn-outline {
     background: transparent;
@@ -116,7 +108,6 @@
   }
   .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* HERO RIGHT — terminal card */
   .terminal {
     background: rgba(255,255,255,0.03);
     border: 1px solid var(--border);
@@ -133,10 +124,7 @@
   .dot.r { background: #ff5f57; }
   .dot.y { background: #ffbd2e; }
   .dot.g { background: #28c840; }
-  .term-title {
-    font-family: 'DM Mono', monospace; font-size: 11px;
-    color: var(--muted); margin-left: auto;
-  }
+  .term-title { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-left: auto; }
   .terminal-body { padding: 1.5rem; font-family: 'DM Mono', monospace; font-size: 13px; line-height: 2; }
   .t-comment { color: #4a6080; }
   .t-key { color: #7eb8f7; }
@@ -147,7 +135,6 @@
   .cursor { display: inline-block; width: 8px; height: 14px; background: var(--accent); animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 2px; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-  /* SECTION */
   section { padding: 6rem 3rem; max-width: 1100px; margin: 0 auto; }
   .section-label {
     font-family: 'DM Mono', monospace;
@@ -162,7 +149,6 @@
   }
   .section-sub { color: var(--muted); font-size: 15px; margin-bottom: 3rem; }
 
-  /* SERVICES */
   .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -180,13 +166,11 @@
     width: 40px; height: 40px; border-radius: 8px;
     background: rgba(0,200,150,0.1);
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1rem;
-    font-size: 18px;
+    margin-bottom: 1rem; font-size: 18px;
   }
   .service-card h3 { font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 0.5rem; }
   .service-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-  /* PROJECTS */
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -204,7 +188,6 @@
     height: 110px;
     display: flex; align-items: center; justify-content: center;
     position: relative; overflow: hidden;
-    font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.3);
   }
   .project-banner.b1 { background: linear-gradient(135deg, #0d2e25 0%, #0d3d2e 100%); }
   .project-banner.b2 { background: linear-gradient(135deg, #0d1f3d 0%, #0d2a50 100%); }
@@ -227,7 +210,6 @@
     color: var(--muted); border: 1px solid var(--border);
   }
 
-  /* ABOUT */
   .about-grid {
     display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start;
   }
@@ -242,7 +224,6 @@
   .stat-n { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--accent); }
   .stat-l { font-size: 12px; color: var(--muted); }
 
-  /* CONTACT */
   .contact-box {
     background: rgba(0,200,150,0.04);
     border: 1px solid rgba(0,200,150,0.15);
@@ -263,7 +244,6 @@
   .contact-chip:hover { border-color: var(--accent); color: var(--accent); }
   .chip-icon { font-size: 14px; }
 
-  /* FOOTER */
   footer {
     border-top: 1px solid var(--border);
     padding: 2rem 3rem;
@@ -272,18 +252,23 @@
     font-family: 'DM Mono', monospace;
   }
 
-  /* DIVIDER */
   .full-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
 
-  /* SVG bar chart in project card */
-  svg text { font-family: 'DM Mono', monospace; }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1rem; }
+    .hero { padding: 4rem 1.5rem; }
+    .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <div class="logo">[ your.name ]</div>
+  <div class="logo">[ HH Insights ]</div>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#projects">Projects</a></li>
@@ -292,7 +277,6 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-grid">
     <div>
@@ -314,8 +298,8 @@
       <div class="terminal-body">
         <div class="t-comment"># About me</div>
         <div><span class="t-brace">{</span></div>
-        <div>&nbsp;&nbsp;<span class="t-key">"name"</span><span class="t-brace">: </span><span class="t-str">"Your Name"</span><span class="t-brace">,</span></div>
-        <div>&nbsp;&nbsp;<span class="t-key">"role"</span><span class="t-brace">: </span><span class="t-str">"Data Scientist"</span><span class="t-brace">,</span></div>
+        <div>&nbsp;&nbsp;<span class="t-key">"name"</span><span class="t-brace">: </span><span class="t-str">"Hassan Hamze"</span><span class="t-brace">,</span></div>
+        <div>&nbsp;&nbsp;<span class="t-key">"company"</span><span class="t-brace">: </span><span class="t-str">"HH Insights"</span><span class="t-brace">,</span></div>
         <div>&nbsp;&nbsp;<span class="t-key">"tools"</span><span class="t-brace">: </span><span class="t-arr">["Python", "SQL", "R",</span></div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-arr">"Tableau", "Power BI"]</span><span class="t-brace">,</span></div>
         <div>&nbsp;&nbsp;<span class="t-key">"available"</span><span class="t-brace">: </span><span class="t-num">true</span></div>
@@ -327,7 +311,6 @@
 
 <hr class="full-divider">
 
-<!-- SERVICES -->
 <section id="services">
   <div class="section-label">What I offer</div>
   <h2>Services</h2>
@@ -358,7 +341,6 @@
 
 <hr class="full-divider">
 
-<!-- PROJECTS -->
 <section id="projects">
   <div class="section-label">My work</div>
   <h2>Projects</h2>
@@ -439,7 +421,6 @@
 
 <hr class="full-divider">
 
-<!-- ABOUT -->
 <section id="about">
   <div class="about-grid">
     <div>
@@ -460,7 +441,7 @@
       </div>
     </div>
     <div class="about-text">
-      <p>I'm a data science student passionate about helping businesses make better decisions through data. I combine technical skills in Python, R, and SQL with a knack for communicating findings clearly to non-technical stakeholders.</p>
+      <p>I'm Hassan Hamze, a data science student passionate about helping businesses make better decisions through data. I combine technical skills in Python, R, and SQL with a knack for communicating findings clearly to non-technical stakeholders.</p>
       <p>Whether it's cleaning a messy dataset, building a predictive model, or turning raw numbers into a dashboard your team actually uses — I focus on delivering work that creates real impact.</p>
       <p>I'm currently available for freelance projects and open to longer-term collaborations. If you have data and questions, let's talk.</p>
       <div style="margin-top:1.5rem;">
@@ -472,24 +453,21 @@
 
 <hr class="full-divider">
 
-<!-- CONTACT -->
 <section id="contact">
   <div class="contact-box">
     <div class="section-label" style="text-align:center">Let's work together</div>
     <h2>Got data? Let's talk.</h2>
     <p>Book a free 30-minute consultation — no commitment, just a conversation about your data challenges.</p>
     <div class="contact-row">
-      <a href="mailto:you@email.com" class="contact-chip"><span class="chip-icon">✉</span> you@email.com</a>
-      <a href="https://linkedin.com" class="contact-chip"><span class="chip-icon">in</span> LinkedIn</a>
-      <a href="https://github.com" class="contact-chip"><span class="chip-icon">⌥</span> GitHub</a>
+      <a href="mailto:hasanhamze2004@gmail.com" class="contact-chip"><span class="chip-icon">✉</span> hasanhamze2004@gmail.com</a>
+      <a href="https://github.com/hasanhamze" target="_blank" class="contact-chip"><span class="chip-icon">⌥</span> github.com/hasanhamze</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <span>© 2026 Your Name</span>
-  <span>Built with intention · Available for freelance</span>
+  <span>© 2026 Hassan Hamze · HH Insights</span>
+  <span>hhinsights.ca · Available for freelance</span>
 </footer>
 
 </body>
